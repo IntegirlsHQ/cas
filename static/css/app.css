@@ -60,6 +60,10 @@ input[type="button"].button-primary:focus {
     padding-top: 10px;
 }
 
-.button.service {
+.button {
     margin: 0 .5rem;
+}
+
+.button:first-of-type {
+  margin: 0;
 }

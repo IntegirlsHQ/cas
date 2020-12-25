@@ -57,11 +57,15 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/", function (req, res, next) {
+app.get("/", (req, res) => {
   res.render(__dirname + "/views/index.ejs", {
     isAuthenticated: req.oidc.isAuthenticated(),
   });
 });
+
+app.get("/loggedout", (req, res) => {
+  res.render(__dirname + "/views/loggedout.ejs");
+})
 
 app.use("/static", express.static(path.join(__dirname, "static")));
 
