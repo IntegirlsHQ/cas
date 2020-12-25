@@ -1,6 +1,8 @@
 {
-  "name": "auth0-express-webapp-sample",
-  "scripts": {},
+  "name": "integirls-cas",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "compression": "^1.7.4",
     "debug": "~2.6.9",
