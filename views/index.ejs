@@ -30,7 +30,7 @@
                     </div>
                     <div class="ten columns">
                         <div class="usercard-right">
-                            <p>Welcome, <strong><%= user.email %></strong>! You are logged in.</p>
+                            <p>Welcome, <strong><%= user.email %></strong>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified.</p>
                             <a class="button button-primary" href="/logout">Logout</a>
                         </div>
                     </div>
