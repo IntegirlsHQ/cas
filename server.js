@@ -57,17 +57,37 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use("/static", express.static(path.join(__dirname, "static")));
+
 app.get("/", (req, res) => {
-  res.render(__dirname + "/views/index.ejs", {
+  res.render("index", {
     isAuthenticated: req.oidc.isAuthenticated(),
   });
 });
 
 app.get("/loggedout", (req, res) => {
-  res.render(__dirname + "/views/loggedout.ejs");
+  res.render("loggedout"), {
+    title: "Logged Out"
+  };
 })
 
-app.use("/static", express.static(path.join(__dirname, "static")));
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// Error handlers
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.render('error', {
+    title: "Error",
+    statusCode: err.status || 500,
+    message: err.message,
+    error: process.env.NODE_ENV !== 'production' ? err : {}
+  });
+});
 
 http.createServer(app).listen(port, () => {
   console.log(`Listening on ${config.baseURL}`);

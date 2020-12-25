@@ -1,57 +1,11 @@
-<!doctype html>
-<html lang="en">
+<%- include('partials/header') %>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width" />
-    <title>inteGIRLS Universal Account</title>
-    <link rel="stylesheet" href="/static/css/normalize.css" />
-    <link rel="stylesheet" href="/static/css/skeleton.css" />
-    <link rel="stylesheet" href="/static/css/app.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" type="image/png" href="/static/img/icon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
-</head>
+<%- include('partials/brand') %>
 
-<body>
-    <div class="container">
-        <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 800;">
-            <img src="/static/img/logo.png" class="logo" /> Universal Account</h1>
-        <% if (locals.isAuthenticated) { %>
-            <div class="box">
-                <div class="row">
-                    <div class="two columns">
-                        <img src="<%= user.picture %>" class="avatar" />
-                    </div>
-                    <div class="ten columns">
-                        <div class="usercard-right">
-                            <p>Welcome, <strong><%= user.email %></strong>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified.</p>
-                            <a class="button button-primary" href="/logout">Logout</a>
-                            <a class="button button-primary" href="https://integirls.us.auth0.com/v2/logout?returnTo=https://account.integirls.org/loggedout">Logout Everywhere</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box">
-                <p>You are able to access these services with your inteGIRLS CAS account: </p>
-                <a class="button service" href="https://forum.integirls.org">Forum</a>
-            </div>
-            <% } else { %>
-            <div class="box">
-                <p>With an inteGIRLS Universal Account, you'll be able to log in to all inteGIRLS services without 
-                    having to create separate accounts.
-                </p>
-                <a class="button button-primary" href="/login">Login / Signup</a>
-            </div>
-            <% } %>
+<% if (locals.isAuthenticated) { %>
+    <%- include('partials/home/loggedin') %>
+<% } else { %>
+    <%- include('partials/home/loggedout') %>
+<% } %>
 
-            <p><strong>CAS v0.1</strong> &ndash; &copy;2020 inteGIRLS.</p>
-    </div>
-</body>
-
-</html>
+<%- include('partials/footer') %>

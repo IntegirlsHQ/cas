@@ -1,0 +1,18 @@
+<div class="box">
+    <div class="row">
+        <div class="two columns">
+            <img src="<%= user.picture %>" class="avatar" />
+        </div>
+        <div class="ten columns">
+            <div class="usercard-right">
+                <p>Welcome,<%= user.email %>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified.</p>
+                <a class="button button-primary" href="/logout">Logout</a>
+                <a class="button button-primary" href="https://integirls.us.auth0.com/v2/logout?returnTo=https://account.integirls.org/loggedout">Logout Everywhere</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box">
+    <p>You are able to access these services with your inteGIRLS CAS account: </p>
+    <a class="button service" href="https://forum.integirls.org">Forum</a>
+</div>
