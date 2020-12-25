@@ -1,0 +1,65 @@
+body {
+  background-color: rgba(242, 184, 216, 0.2);
+}
+
+.container {
+  margin-top: 10vh;
+}
+
+.logo {
+    vertical-align: middle;
+    display: inline;
+    height: 6rem;
+    margin-right: 1rem;
+}
+
+.button,
+.button:hover,
+.button:focus {
+  background-color: #f2b8d8;
+  border-color: #f2b8d8;
+}
+
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary,
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  background-color: #481431;
+  border-color: #481431;
+}
+
+.avatar {
+  border-radius: 100%;
+  width: 10rem;
+}
+
+.box {
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+}
+
+.usercard-rightcolumn {
+    
+  position: relative;
+}
+
+.usercard-right {
+    padding-top: 10px;
+}
+
+.button.service {
+    margin: 0 .5rem;
+}
