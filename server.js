@@ -65,11 +65,11 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/loggedout", (req, res) => {
-  res.render("loggedout"), {
-    title: "Logged Out"
-  };
-})
+app.get("/picture", requiresAuth(), (req, res) => {
+  res.render("gravatar", {
+    title: "Profile Picture"
+  });
+});
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

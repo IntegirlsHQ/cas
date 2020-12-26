@@ -6,8 +6,8 @@
         <div class="ten columns">
             <div class="usercard-right">
                 <p>Welcome, <%= user.email %>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified.</p>
+                <a class="button button-primary" href="/picture">Change Profile Picture</a>
                 <a class="button button-primary" href="/logout">Logout</a>
-                <a class="button button-primary" href="https://integirls.us.auth0.com/v2/logout?returnTo=https://account.integirls.org/loggedout">Logout Everywhere</a>
             </div>
         </div>
     </div>
@@ -16,3 +16,5 @@
     <p>You are able to access these services with your inteGIRLS CAS account: </p>
     <a class="button service" href="https://forum.integirls.org">Forum</a>
 </div>
+
+<script src="/static/js/user.js"></script>

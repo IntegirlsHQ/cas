@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<%- include('partials/brand') %>
+
+<div class="box">
+    <div class="row">
+        <div class="ten columns">
+            <div class="usercard-right">
+                <h4>Changing Your Profile Picture with Gravatar</h4>
+                <p>For convenience, we use Gravatar to display your profile picture across all inteGIRLS services. Your Gravatar is an image and public
+                    profile that follows you from site to site, and it attaches to you via your primary email.</p>
+                <p>If you wish to update your profile picture, please head to Gravatar, create an account or log in with your primary email <strong>
+                        <%- user.email -%>
+                    </strong> and set a new profile picture. Your new profile picture will be automatically updated here in a few hours.</p>
+                <a class="button" href="https://gravatar.com/">Gravatar »</a>
+            </div>
+        </div>
+        <div class="two columns">
+            <img src="<%= user.picture %>" class="avatar" />
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
