@@ -1,20 +1,52 @@
+<%
+dateFmt = (d) => {
+    return (d.getMonth()+1)+'/'+d.getDate()+'/' + d.getFullYear(); 
+}
+%>
+
 <div class="box">
-    <div class="row">
-        <div class="two columns">
-            <img src="<%= user.picture %>" class="avatar" />
-        </div>
-        <div class="ten columns">
-            <div class="usercard-right">
-                <p>Welcome, <%= user.email %>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified.</p>
-                <a class="button button-primary" href="/picture">Change Profile Picture</a>
-                <a class="button button-primary" href="/logout">Logout</a>
-            </div>
-        </div>
+    <div class="usercard-right">
+        <p>Welcome, <span class="data"><%= user.nickname %></span>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified. 
+            Your inteGIRLS Universal Account was registered on <span class="data"><%= dateFmt(new Date(user.created_at)) %></span>, and it was last accessed on 
+            <span class="data"><%= dateFmt(new Date(user.last_login)) %></span> from <span class="data"><%= user.last_ip %></span>.</p>
+        <a class="button button-primary" href="/logout">Logout</a>
     </div>
 </div>
 <div class="box">
-    <p>You are able to access these services with your inteGIRLS CAS account: </p>
+    <h2>Services Available</h2>
+    <p>You are able to access these services with your inteGIRLS Universal account: </p>
     <a class="button service" href="https://forum.integirls.org">Forum</a>
+</div>
+<div class="box">
+    <div class="row">
+        <div class="four columns">
+            <div style="text-align: center;">
+                <a href="/picture">
+                    <img src="<%- user.picture %>" class="avatar">
+                </a>
+            </div>
+        </div>
+        <div class="eight columns">
+            <h2>Update Account</h2>
+            <% if (locals.updatedStatus === "success") { %>
+            <div class="notification success">
+                <p>🎉 Your profile has been updated successfully!</p>
+            </div>
+            <% } else if (locals.updatedStatus === "error") { %>
+            <div class="notification error">
+                <p>😢 Something went wrong with updating your profile.</p>
+            </div>
+            <% } %>
+            <form action="/update" method="post">
+                <label for="email">Primary Email</label>
+                <input class="u-full-width" type="email" id="email" value="<%= user.email %>" disabled />
+                <label for="nickname">Nickname</label>
+                <input class="u-full-width" type="text" id="nickname" value="<%= user.nickname %>" name="nickname" />
+                <button class="button button-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+
 </div>
 
 <script src="/static/js/user.js"></script>

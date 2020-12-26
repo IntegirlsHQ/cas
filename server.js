@@ -1,19 +1,35 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const http = require("http");
+const axios = require("axios").default;
 const logger = require("morgan");
 const path = require("path");
 const minifyHTML = require("express-minify-html-2");
 const compression = require("compression");
+const bodyParser = require("body-parser");
 const { auth, requiresAuth } = require("express-openid-connect");
 
 dotenv.load();
+
+/* Create Auth0 Management Client (Token obtained automatically) */
+const ManagementClient = require("auth0").ManagementClient;
+const auth0 = new ManagementClient({
+  domain: process.env.AUTH_DOMAIN,
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.SECRET,
+  scope: "read:users update:users",
+});
 
 const app = express();
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(logger("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
@@ -51,29 +67,62 @@ if (
 
 app.use(auth(config));
 
+const USER_CACHE = {};
+
 // Middleware to make the `user` object available for all views
-app.use(function (req, res, next) {
-  res.locals.user = req.oidc.user;
-  next();
+app.use((req, res, next) => {
+  if (req.oidc.user) {
+    if (USER_CACHE[req.oidc.user.sub]) {
+      // pull user info from cache
+      res.locals.user = USER_CACHE[req.oidc.user.sub];
+      next();
+    } else {
+      // pull full user data from auth0
+      auth0.getUser({ id: req.oidc.user.sub }, (err, user) => {
+        USER_CACHE[req.oidc.user.sub] = user;
+        res.locals.user = user;
+        next();
+      });
+    }
+  } else {
+    next();
+  }
 });
 
-app.use("/static", express.static(path.join(__dirname, "static")));
-
 app.get("/", (req, res) => {
+  console.log(res.locals.user);
   res.render("index", {
     isAuthenticated: req.oidc.isAuthenticated(),
+    updatedStatus: req.query.updated || false,
   });
 });
 
 app.get("/picture", requiresAuth(), (req, res) => {
   res.render("gravatar", {
-    title: "Profile Picture"
+    title: "Profile Picture",
   });
 });
 
+app.post("/update", requiresAuth(), (req, res) => {
+  auth0.updateUser(
+    { id: req.oidc.user.sub },
+    { nickname: req.body.nickname },
+    (err, user) => {
+      if (err) {
+        res.redirect("/?updated=error");
+      } else {
+        delete USER_CACHE[req.oidc.user.sub] // clear server cache 
+        res.redirect("/?updated=success");
+      }
+    }
+  );
+});
+
+app.use("/static", express.static(path.join(__dirname, "static")));
+
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
+  const err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
@@ -81,11 +130,11 @@ app.use((req, res, next) => {
 // Error handlers
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error', {
+  res.render("error", {
     title: "Error",
     statusCode: err.status || 500,
     message: err.message,
-    error: process.env.NODE_ENV !== 'production' ? err : {}
+    error: process.env.NODE_ENV !== "production" ? err : {},
   });
 });
 
