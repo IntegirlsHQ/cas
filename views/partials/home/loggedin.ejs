@@ -7,14 +7,14 @@ dateFmt = (d) => {
 <div class="box">
     <div class="usercard-right">
         <p>Welcome, <span class="data"><%= user.nickname %></span>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified. 
-            Your inteGIRLS Universal Account was registered on <span class="data"><%= dateFmt(new Date(user.created_at)) %></span>, and it was last accessed on 
+            Your inteGIRLS Passport was registered on <span class="data"><%= dateFmt(new Date(user.created_at)) %></span>, and it was last accessed on 
             <span class="data"><%= dateFmt(new Date(user.last_login)) %></span> from <span class="data"><%= user.last_ip %></span>.</p>
         <a class="button button-primary" href="/logout">Logout</a>
     </div>
 </div>
 <div class="box">
     <h2>Services Available</h2>
-    <p>You are able to access these services with your inteGIRLS Universal account: </p>
+    <p>You are able to access these services with your inteGIRLS Passport: </p>
     <a class="button service" href="https://forum.integirls.org">Forum</a>
 </div>
 <div class="box">
