@@ -102,7 +102,24 @@ app.use((req, res, next) => {
           delete data["group_users"];
           delete data["user_option"];
           USER_CACHE[req.oidc.user.sub].forum = data;
-          next();
+
+          if (data.username !== res.locals.user.nickname) {
+            // force sync username
+            auth0.updateUser(
+              { id: req.oidc.user.sub },
+              { nickname: data.username },
+              (err, user) => {
+                if (err) {
+                  throw new Error(err);
+                } else {
+                  delete USER_CACHE[req.oidc.user.sub];
+                  res.redirect(req.url);
+                }
+              }
+            );
+          } else {
+            next();
+          }
         })
         .catch((err) => {
           next();
@@ -148,39 +165,9 @@ app.get("/picture", requiresAuth(), (req, res) => {
   });
 });
 
-app.post("/update", requiresAuth(), (req, res) => {
-  auth0.updateUser(
-    { id: req.oidc.user.sub },
-    { nickname: req.body.nickname },
-    (err, user) => {
-      if (err) {
-        res.redirect("/?updated=error");
-      } else {
-        delete USER_CACHE[req.oidc.user.sub]; // clear server cache
-        res.redirect("/?updated=success");
-      }
-    }
-  );
-});
-
 app.get("/refresh", requiresAuth(), (req, res) => {
   delete USER_CACHE[req.oidc.user.sub];
   res.redirect("/?updated=success");
-});
-
-app.get("/sync-nickname", requiresAuth(), (req, res) => {
-  auth0.updateUser(
-    { id: req.oidc.user.sub },
-    { nickname: res.locals.user.forum.username },
-    (err, user) => {
-      if (err) {
-        res.redirect("/?updated=error");
-      } else {
-        delete USER_CACHE[req.oidc.user.sub]; // clear server cache
-        res.redirect("/?updated=success");
-      }
-    }
-  );
 });
 
 app.use("/static", express.static(path.join(__dirname, "static")));

@@ -38,25 +38,13 @@ dateFmt = (d) => {
             </div>
         </div>
         <div class="eight columns">
-            <h2>Update Account</h2>
-            <form action="/update" method="post">
-                <label for="email">Primary Email</label>
-                <input class="u-full-width" type="email" id="email" value="<%= user.email %>" disabled />
+            <h2>My Account</h2>
+            <label for="email">Primary Email</label>
+            <input class="u-full-width" type="email" id="email" value="<%= user.email %>" disabled />
 
-                <label for="nickname">Nickname</label>
-                <div class="row">
-                    <div class="six columns">
-                        <input class="u-full-width" type="text" id="nickname" value="<%= user.nickname %>" name="nickname" />
-                    </div>
-                    <% if (user.forum) { %> 
-                    <div class="six columns">
-                        <a class="button" href="/sync-nickname">Sync Nickname From Forum</a>
-                    </div>
-                    <% } %>
-                </div>
+            <label for="nickname">Nickname</label>
+            <input class="u-full-width" type="text" id="nickname" value="<%= user.nickname %>" name="nickname" disabled />
 
-                <button class="button button-primary" type="submit">Update</button>
-            </form>
         </div>
     </div>
 
