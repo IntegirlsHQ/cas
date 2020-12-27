@@ -9,7 +9,7 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 const { auth, requiresAuth } = require("express-openid-connect");
 
-const forum = require('./services/forum')
+const forum = require("./services/forum");
 
 dotenv.load();
 
@@ -91,6 +91,30 @@ app.use((req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  if (req.oidc.user) {
+    if (!USER_CACHE[req.oidc.user.sub].forum) {
+      forum
+        .getUser(req.oidc.user.sub)
+        .then((data) => {
+          delete data["user_auth_tokens"];
+          delete data["groups"];
+          delete data["group_users"];
+          delete data["user_option"];
+          USER_CACHE[req.oidc.user.sub].forum = data;
+          next();
+        })
+        .catch((err) => {
+          next();
+        });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
 // Middleware to make the `user` object available for all views
 app.use((req, res, next) => {
   if (req.oidc.user) {
@@ -112,7 +136,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-
   res.render("index", {
     isAuthenticated: req.oidc.isAuthenticated(),
     updatedStatus: req.query.updated || false,
@@ -133,7 +156,27 @@ app.post("/update", requiresAuth(), (req, res) => {
       if (err) {
         res.redirect("/?updated=error");
       } else {
-        delete USER_CACHE[req.oidc.user.sub] // clear server cache 
+        delete USER_CACHE[req.oidc.user.sub]; // clear server cache
+        res.redirect("/?updated=success");
+      }
+    }
+  );
+});
+
+app.get("/refresh", requiresAuth(), (req, res) => {
+  delete USER_CACHE[req.oidc.user.sub];
+  res.redirect("/?updated=success");
+});
+
+app.get("/sync-nickname", requiresAuth(), (req, res) => {
+  auth0.updateUser(
+    { id: req.oidc.user.sub },
+    { nickname: res.locals.user.forum.username },
+    (err, user) => {
+      if (err) {
+        res.redirect("/?updated=error");
+      } else {
+        delete USER_CACHE[req.oidc.user.sub]; // clear server cache
         res.redirect("/?updated=success");
       }
     }
