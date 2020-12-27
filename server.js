@@ -9,6 +9,8 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 const { auth, requiresAuth } = require("express-openid-connect");
 
+const forum = require('./services/forum')
+
 dotenv.load();
 
 /* Create Auth0 Management Client (Token obtained automatically) */
@@ -89,8 +91,28 @@ app.use((req, res, next) => {
   }
 });
 
+// Middleware to make the `user` object available for all views
+app.use((req, res, next) => {
+  if (req.oidc.user) {
+    if (USER_CACHE[req.oidc.user.sub]) {
+      // pull user info from cache
+      res.locals.user = USER_CACHE[req.oidc.user.sub];
+      next();
+    } else {
+      // pull full user data from auth0
+      auth0.getUser({ id: req.oidc.user.sub }, (err, user) => {
+        USER_CACHE[req.oidc.user.sub] = user;
+        res.locals.user = user;
+        next();
+      });
+    }
+  } else {
+    next();
+  }
+});
+
 app.get("/", (req, res) => {
-  console.log(res.locals.user);
+
   res.render("index", {
     isAuthenticated: req.oidc.isAuthenticated(),
     updatedStatus: req.query.updated || false,
