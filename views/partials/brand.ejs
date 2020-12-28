@@ -1,5 +1,14 @@
-<a href="/" class="brand">
-    <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 800;">
-        <img src="/static/img/logo.png" class="logo" /> Passport
-    </h1>
-</a>
+<div class="row">
+    <div class="ten columns">
+        <a href="/" class="brand">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 800;">
+                <img src="/static/img/logo.png" class="logo" /> Passport
+            </h1>
+        </a>
+    </div>
+    <% if (locals.isAuthenticated) { %>
+    <div class="two columns" style="text-align: right; ">
+        <a class="button button-primary" style="margin-top: 2rem;" href="/logout">Logout</a>
+    </div>
+    <% } %>
+</div>

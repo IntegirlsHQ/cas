@@ -2,6 +2,8 @@
 dateFmt = (d) => {
     return (d.getMonth()+1)+'/'+d.getDate()+'/' + d.getFullYear(); 
 }
+
+b16 = (s) => new Buffer(s).toString('base64')
 %>
 
 <% if (locals.updatedStatus === "success") { %>
@@ -15,19 +17,6 @@ dateFmt = (d) => {
 <% } %>
 
 <div class="box">
-    <div class="usercard-right">
-        <p>Welcome, <span class="data"><%= user.nickname %></span>! You are logged in, and your email <% if (user.email_verified) { %>has been<% } else { %>is not<% } %> verified. 
-            Your inteGIRLS Passport was registered on <span class="data"><%= dateFmt(new Date(user.created_at)) %></span>, and it was last accessed on 
-            <span class="data"><%= dateFmt(new Date(user.last_login)) %></span> from <span class="data"><%= user.last_ip %></span>.</p>
-            <a class="button button-primary" href="/refresh">Refresh</a><a class="button button-primary" href="/logout">Logout</a>
-    </div>
-</div>
-<div class="box">
-    <h2>Services Available</h2>
-    <p>You are able to access these services with your Passport: </p>
-    <a class="button service" href="https://forum.integirls.org" target="_blank">Forum <% if (user.forum) { %> (Linked)<% } %></a>
-</div>
-<div class="box">
     <div class="row">
         <div class="four columns">
             <div style="text-align: center;">
@@ -38,16 +27,29 @@ dateFmt = (d) => {
             </div>
         </div>
         <div class="eight columns">
-            <h2>My Account</h2>
-            <label for="email">Primary Email</label>
-            <input class="u-full-width" type="email" id="email" value="<%= user.email %>" disabled />
+            <h2>My Account <a href="/refresh" class="forceUpdate">(Force Reload)</a></h2>
+            <div class="row">
+                <div class="six columns">
+                    <label>Primary Email (<% if (user.email_verified) { %>Verified<% } else { %>Not Verified<% } %>)</label>
+                    <p><%= user.email %> <% if (user.email_verified) { %><a href="/update/email">Update</a><% } else { %><a href="/update/resend">Resend Verification Email</a><% } %></p>
+                    
+                    <label>User Identifier <span class="hint">(Base16 Encoded)</span></label>
+                    <p><code><%= b16(user.user_id) %></code></p>
+                </div>
 
-            <label for="nickname">Nickname</label>
-            <input class="u-full-width" type="text" id="nickname" value="<%= user.nickname %>" name="nickname" disabled />
-
+                <div class="six columns">
+                    <label>Nickname</label>
+                    <p><%= user.nickname %></p>
+                </div>
+            </div>
         </div>
     </div>
 
+</div>
+<div class="box">
+    <h2>Services Available</h2>
+    <p>You are able to access these services with your Passport: </p>
+    <a class="button service" href="https://forum.integirls.org" target="_blank">Forum <% if (user.forum) { %> (Linked)<% } %></a>
 </div>
 
 <script src="/static/js/user.js"></script>

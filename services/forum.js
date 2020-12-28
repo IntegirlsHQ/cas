@@ -17,7 +17,14 @@ const getUser = (uid) => {
         }
       )
       .then((response) => {
-        resolve(response.data.user);
+        const data = response.data.user
+
+        delete data["user_auth_tokens"];
+        delete data["groups"];
+        delete data["group_users"];
+        delete data["user_option"];
+
+        resolve(data);
       })
       .catch((err) => {
         reject(err);

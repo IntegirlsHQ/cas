@@ -13,6 +13,8 @@ const forum = require("./services/forum");
 
 dotenv.load();
 
+const USER_CACHE = {};
+
 /* Create Auth0 Management Client (Token obtained automatically) */
 const ManagementClient = require("auth0").ManagementClient;
 const auth0 = new ManagementClient({
@@ -69,7 +71,8 @@ if (
 
 app.use(auth(config));
 
-const USER_CACHE = {};
+app.use("/static", express.static(path.join(__dirname, "static")));
+
 
 // Middleware to make the `user` object available for all views
 app.use((req, res, next) => {
@@ -97,10 +100,6 @@ app.use((req, res, next) => {
       forum
         .getUser(req.oidc.user.sub)
         .then((data) => {
-          delete data["user_auth_tokens"];
-          delete data["groups"];
-          delete data["group_users"];
-          delete data["user_option"];
           USER_CACHE[req.oidc.user.sub].forum = data;
 
           if (data.username !== res.locals.user.nickname) {
@@ -169,8 +168,6 @@ app.get("/refresh", requiresAuth(), (req, res) => {
   delete USER_CACHE[req.oidc.user.sub];
   res.redirect("/?updated=success");
 });
-
-app.use("/static", express.static(path.join(__dirname, "static")));
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
