@@ -10,7 +10,7 @@ app.post("/email", (req, res) => {
   if (!res.locals.user.email_verified) {
     throw new Error("Current email is not verified.");
   } else {
-    const email = req.body.email;
+    const email = req.body.email.trim().toLowerCase();
 
     const validator = (email) => {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -24,6 +24,8 @@ app.post("/email", (req, res) => {
         message: "Invalid email address.",
         error: { message: "Invalid email address." },
       });
+    } else if (email === res.locals.user.email.toLowerCase()) {
+        res.redirect("/")
     } else {
       auth0.updateUser(
         {
