@@ -31,7 +31,7 @@ b16 = (s) => new Buffer(s).toString('base64')
             <div class="row">
                 <div class="six columns">
                     <label>Primary Email (<% if (user.email_verified) { %>Verified<% } else { %>Not Verified<% } %>)</label>
-                    <p><%= user.email %> <% if (user.email_verified) { %><a href="/update/email">Update</a><% } else { %><a href="/update/resend">Resend Verification Email</a><% } %></p>
+                    <p><%= user.email %> <% if (user.email_verified) { %><a href="/update/email">Update</a><% } else { %><a href="/update/resend">Resend Verification</a><% } %></p>
                     
                     <label>User Identifier <span class="hint">(Base16 Encoded)</span></label>
                     <p><code><%= b16(user.user_id) %></code></p>

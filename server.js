@@ -6,7 +6,7 @@ const path = require("path");
 const minifyHTML = require("express-minify-html-2");
 const compression = require("compression");
 const bodyParser = require("body-parser");
-const { auth } = require("express-openid-connect");
+const { auth, requiresAuth } = require("express-openid-connect");
 
 const middlewares = require("./utils/middlewares");
 const app = express();
@@ -64,6 +64,7 @@ app.use(middlewares.forumCache);
 app.use(middlewares.userLocals);
 
 app.use("/", require("./routes/index"));
+app.use("/update", requiresAuth(), require("./routes/update"));
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -4,7 +4,9 @@
 
 <div class="box">
     <h3><strong><%- statusCode -%> &ndash; <%- message -%></strong></h3>
-    <pre><%- error -%></pre>
+    <% if (Object.keys(error).length !== 0) { %><pre><%- JSON.stringify(error) -%></pre><% } %>
+    <p>If you believe this is an error, please contact <a href="mailto:tech@integirls.org">tech@integirls.org</a>.</p>
+    <a href="/" class="button button-primary">« Back</a>
 </div>
 
 <%- include('partials/footer') %>

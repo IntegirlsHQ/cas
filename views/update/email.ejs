@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+
+<%- include('../partials/brand') %>
+
+<div class="box">
+    <h2>Update Email Address</h2>
+    <p>Be very careful! Double check that your email address is entered correctly before submitting. You may lose access to your Passport if you made a mistake.
+    You'll be asked to re-verify your email address. Please check your inbox for the verification email!</p>
+    <form method="post">
+        <label for="email">Email Address</label>
+
+        <input type="email" value="<%= user.email %>" id="email" name="email" />
+        <button class="button button-primary" type="submit">Update</button>
+
+    </form>
+</div>
+
+<%- include('../partials/footer') %>
