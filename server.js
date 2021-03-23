@@ -56,6 +56,10 @@ if (
   config.baseURL = `http://localhost:${port}`;
 }
 
+if (process.env.NODE_ENV === "production") {
+  app.use(middlewares.domainEnforcement);
+}
+
 app.use(auth(config));
 app.use("/static", express.static(path.join(__dirname, "static")));
 

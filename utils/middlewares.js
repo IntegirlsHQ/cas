@@ -1,6 +1,10 @@
+const dotenv = require("dotenv");
+
 const forum = require("../services/forum");
 const auth0 = require("../services/auth0");
 const USER_CACHE = require("./user_cache");
+
+dotenv.load();
 
 // Middleware request user data from Auth0 or cache
 const userCache = (req, res, next) => {
@@ -80,4 +84,11 @@ const userLocals = (req, res, next) => {
   }
 };
 
-module.exports = { userCache, forumCache, userLocals };
+const domainEnforcement = (req, res, next) => {
+  if (req.hostname !== process.env.DOMAIN) {
+    return res.redirect('https://' + process.env.DOMAIN + req.originalUrl);
+  }
+  next();
+}
+
+module.exports = { userCache, forumCache, userLocals, domainEnforcement };
