@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(242, 184, 216, 0.2);
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .container {
@@ -42,6 +42,11 @@ input[type="reset"].button-primary:focus,
 input[type="button"].button-primary:focus {
   background-color: #481431;
   border-color: #481431;
+}
+
+.button * {
+  margin-top: -5px;
+  display: inline-block;
 }
 
 .avatar {
@@ -142,6 +147,15 @@ img.branded-login {
 }
 
 img.branded-login:hover {
-  filter: drop-shadow(4px 4px 4px rgba(253, 169, 224, .75));
+  filter: drop-shadow(4px 4px 4px rgba(253, 169, 224, 0.75));
   transform: translateY(-3px);
+}
+
+ion-icon, 
+ion-icon + *  {
+  vertical-align: middle;
+}
+
+ion-icon + * {
+  margin-left: 5px;
 }

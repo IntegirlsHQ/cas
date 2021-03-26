@@ -27,14 +27,14 @@ b16 = (s) => new Buffer(s).toString('base64')
             </div>
         </div>
         <div class="eight columns">
-            <h2>My Account <a href="/refresh" class="forceUpdate">(Force Reload)</a></h2>
+            <h2><ion-icon name="person-circle-outline"></ion-icon><span>My Account <a href="/refresh" class="forceUpdate">(Force Reload)</a></span></h2>
             <div class="row">
                 <div class="six columns">
                     <label>Primary Email (<% if (user.email_verified) { %>Verified<% } else { %>Not Verified<% } %>)</label>
                     <p><%= user.email %> <% if (user.email_verified) { %><a href="/update/email">Update</a><% } else { %><a href="/update/resend">Resend Verification</a><% } %></p>
                     
-                    <label>User Identifier <span class="hint">(Base16 Encoded)</span></label>
-                    <p><code><%= b16(user.user_id) %></code></p>
+                    <label>User Identifier</label>
+                    <p><code><%= user.user_id %></code></p>
                 </div>
 
                 <div class="six columns">
@@ -47,8 +47,8 @@ b16 = (s) => new Buffer(s).toString('base64')
 
 </div>
 <div class="box">
-    <h2>Services Available</h2>
-    <p>You are able to access these services with your Passport: </p>
+    <h2><ion-icon name="navigate-circle-outline"></ion-icon><span>Services Available</span></h2>
+    <p>You are able to access the following inteGIRLS platforms with your Passport. Some platforms may allow or require you to link your Passport account.</p>
     <a class="button service" href="https://forum.integirls.org" target="_blank">Forum <% if (user.forum) { %> (Linked)<% } %></a>
 </div>
 

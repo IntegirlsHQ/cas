@@ -2,13 +2,13 @@
     <div class="ten columns">
         <a href="/" class="brand">
             <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: 800;">
-                <img src="https://static.integirls.org/images/branding/logos/black-pink.png" class="logo" /> Passport
+                <ion-icon name="id-card-outline"></ion-icon> <span>inteGIRLS Passport</span>
             </h1>
         </a>
     </div>
     <% if (locals.isAuthenticated) { %>
     <div class="two columns" style="text-align: right; ">
-        <a class="button button-primary" style="margin-top: 2rem;" href="/logout">Logout</a>
+        <a class="button button-primary" style="margin-top: 2rem;" href="/logout"><ion-icon name="log-out-outline"></ion-icon><span>Log Out</span></a>
     </div>
     <% } %>
 </div>
