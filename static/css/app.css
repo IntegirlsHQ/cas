@@ -58,17 +58,18 @@ input[type="button"].button-primary:focus {
   padding: 3rem 3rem;
   margin: 2rem 0;
   border-radius: 5px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 1px 3px rgb(63 63 68 / 15%), 0 20px 30px rgb(63 63 68 / 7%);
 }
 
 .button {
   margin: 0 1rem;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 1px 3px rgb(63 63 68 / 15%), 0 20px 30px rgb(63 63 68 / 7%);
+
 }
 
 .button:hover {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: none;
 }
 
 .button:first-of-type {
