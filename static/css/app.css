@@ -65,7 +65,12 @@ input[type="button"].button-primary:focus {
   margin: 0 1rem;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-shadow: 0 1px 3px rgb(63 63 68 / 15%), 0 20px 30px rgb(63 63 68 / 7%);
+}
 
+.button.disabled {
+  pointer-events: none;
+  background-color: lightgray;
+  border: gray;
 }
 
 .button:hover {

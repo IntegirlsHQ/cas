@@ -12,15 +12,18 @@ const userCache = (req, res, next) => {
     if (USER_CACHE[req.oidc.user.sub]) {
       // pull user info from cache
       res.locals.user = USER_CACHE[req.oidc.user.sub];
+      console.log(res.locals.user);
       next();
     } else {
       // pull full user data from auth0
       auth0.getUser({ id: req.oidc.user.sub }, (err, user) => {
         USER_CACHE[req.oidc.user.sub] = user;
         res.locals.user = user;
+        console.log(res.locals.user);
         next();
       });
     }
+
   } else {
     next();
   }

@@ -50,6 +50,9 @@ b16 = (s) => new Buffer(s).toString('base64')
     <h2><ion-icon name="navigate-circle-outline"></ion-icon><span>Services Available</span></h2>
     <p>You are able to access the following inteGIRLS platforms with your Passport. Some platforms may allow or require you to link your Passport account.</p>
     <a class="button service" href="https://forum.integirls.org" target="_blank">Forum <% if (user.forum) { %> (Linked)<% } %></a>
+    <a class="button service disabled" href="#!" id="discord">Discord <% if (user.identities[1] && user.identities[1].connection == 'discord') { %> (Linked)<% } %> – Coming Soon!</a> 
+    <p style="margin-top:1rem">To link your Discord account, <a href="/logout">log out</a> of Passport, and log back in by selecting "Continue with Discord".</p>   
 </div>
 
+<script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
 <script src="/static/js/user.js"></script>
