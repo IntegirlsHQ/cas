@@ -71,7 +71,7 @@ app.get("/resend", (req, res) => {
   }
 });
 
-app.get("/picture", requiresAuth(), (req, res) => {
+app.get("/picture", (req, res) => {
   res.render("update/picture", {
     title: "Profile Picture",
   });
