@@ -18,7 +18,7 @@
 <div class="box">
     <h2>Unlink Accounts</h2>
     <% if (user.identities.length > 1) { %>
-    <form method="post">
+    <form method="post" action="/update/unlink">
         <label for="email">Which account do you want to unlink?</label>
         <select id="target_id" name="target_id">
             <% for(var i=1; i < user.identities.length; i++) { %>
