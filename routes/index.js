@@ -10,10 +10,4 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/picture", requiresAuth(), (req, res) => {
-  res.render("gravatar", {
-    title: "Profile Picture",
-  });
-});
-
 module.exports = app;

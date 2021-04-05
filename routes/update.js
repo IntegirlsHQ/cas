@@ -71,6 +71,12 @@ app.get("/resend", (req, res) => {
   }
 });
 
+app.get("/picture", requiresAuth(), (req, res) => {
+  res.render("update/picture", {
+    title: "Profile Picture",
+  });
+});
+
 app.get("/link", (req, res) => {
   res.render('update/link', {
     title: 'Unlink Account'
