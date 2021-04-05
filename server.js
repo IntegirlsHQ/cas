@@ -69,6 +69,7 @@ app.use(middlewares.userLocals);
 
 app.use("/", require("./routes/index"));
 app.use("/update", requiresAuth(), require("./routes/update"));
+app.use("/link", requiresAuth(), require("./routes/link"));
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {

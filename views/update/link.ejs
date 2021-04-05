@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+
+<%- include('../partials/brand') %>
+
+
+<div class="box">
+    <h2>Link Accounts</h2>
+
+    <% if (user.identities.filter(e => e && e.connection === 'discord').length == 0) { %>
+    <a class="button service" href="/link/discord">Link Discord</a>
+    <% } else { %>
+        
+    <a class="button service disabled" href="#!">Discord Linked</a>
+    <% } %>
+</div>
+
+
+<div class="box">
+    <h2>Unlink Accounts</h2>
+    <% if (user.identities.length > 1) { %>
+    <form method="post">
+        <label for="email">Which account do you want to unlink?</label>
+        <select id="target_id" name="target_id">
+            <% for(var i=1; i < user.identities.length; i++) { %>
+                <option value="<%= user.identities[i].user_id %>"><%= user.identities[i].user_id %></option>
+            <% } %>
+        </select>
+        <br />
+        <button class="button button-primary" type="submit">Unlink</button>
+    </form>
+    <% } else { %>
+        <p>You do not have any accounts to unlink!</p>
+        <a href="/" class="button button-primary">« Back</a>
+    <% }%>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+<%- include('../partials/brand') %>
+
+<div class="box">
+    <h2>Link Your Discord Account</h2>
+    <p>
+        You are about to link your Discord account to your inteGIRLS Passport! Linking your account allows us to send you relevant information
+        through relevant communication channels, and also helps us granting you the right roles to in our Discord server. 
+        <strong>Please read this guide carefully before proceeding.</strong>
+    </p>
+    
+    <h3>Step 1: Check Your Discord Email</h3>
+    <p>
+        To be able to link your Discord account automatically, you must use the same email address for your Discord account and your inteGIRLs Passport.
+        The address you used for your inteGIRLS Passport is <code><%= user.email %></code> (you can change it <a href="/update/email">here</a>). 
+        To check your Discord email address, click "User Settings" on the bottom left of Discord, then select "Reveal" next to "Email" under "My Account".
+    </p>
+    <img src="/static/img/discord/settings.png">
+
+    <h3>Step 2: Log Into Passport with Discord</h3>
+    <p>Once you have made sure that your email addresses match, you will need to log out of your Passport account. Once you've been logged out, click "Log In"
+        on the homepage again, then use the "Continue with Discord" button to log in. 
+    </p>
+    <img src="/static/img/discord/login.png">
+    <p>Click "Authorize" to allow us to access your Discord data, and you should be greeted with a confirmation screen. Click "Continue" and log in with your 
+        inteGIRLS account/password again.
+    </p>
+    <img src="/static/img/discord/confirm.png">
+    <p>If you have successfully been logged into your account, you are all set!</p>
+    <hr />
+    <p style="margin-bottom: 1rem">Start linking your account from here!</p>
+    <a href="/logout" class="button button-primary">Log Out to Start Linking</a>
+</div>
+        
+<%- include('../partials/footer') %>

@@ -71,4 +71,31 @@ app.get("/resend", (req, res) => {
   }
 });
 
+app.get("/link", (req, res) => {
+  res.render('update/link', {
+    title: 'Unlink Account'
+  })
+})
+
+app.post("/unlink", (req, res) => {
+  const id = res.locals.user.user_id
+  const provider = 'oauth2'
+  const target_id = req.body.target_id
+
+  auth0.unlinkUsers({
+    id: id,
+    provider,
+    user_id: target_id
+  }, (err, user) => {
+    if (err) {
+      console.error(err)
+    }
+
+    res.render('message', {
+      title: "Account Unlinked",
+      message: "Your account has been unlinked successfully."
+    })
+  })
+})
+
 module.exports = app;

@@ -9,21 +9,12 @@ dotenv.load();
 // Middleware request user data from Auth0 or cache
 const userCache = (req, res, next) => {
   if (req.oidc.user) {
-    if (USER_CACHE[req.oidc.user.sub]) {
-      // pull user info from cache
-      res.locals.user = USER_CACHE[req.oidc.user.sub];
-      console.log(res.locals.user);
+    // pull full user data from auth0
+    auth0.getUser({ id: req.oidc.user.sub }, (err, user) => {
+      USER_CACHE[req.oidc.user.sub] = user;
+      res.locals.user = user;
       next();
-    } else {
-      // pull full user data from auth0
-      auth0.getUser({ id: req.oidc.user.sub }, (err, user) => {
-        USER_CACHE[req.oidc.user.sub] = user;
-        res.locals.user = user;
-        console.log(res.locals.user);
-        next();
-      });
-    }
-
+    });
   } else {
     next();
   }
@@ -89,9 +80,9 @@ const userLocals = (req, res, next) => {
 
 const domainEnforcement = (req, res, next) => {
   if (req.hostname !== process.env.DOMAIN) {
-    return res.redirect('https://' + process.env.DOMAIN + req.originalUrl);
+    return res.redirect("https://" + process.env.DOMAIN + req.originalUrl);
   }
   next();
-}
+};
 
 module.exports = { userCache, forumCache, userLocals, domainEnforcement };
